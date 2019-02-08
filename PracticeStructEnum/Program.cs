@@ -10,11 +10,20 @@ namespace PracticeStructEnum
     {
         static void Main(string[] args)
         {
-            int[] date = new int[]{ 2018, 10, 15 };
-            Employee employee = new Employee("Bob", Vacancies.Accountant, 250000, date);
+            //Console.Write("Введите количество работников: ");
+            //int employeeCount = int.Parse(Console.ReadLine());
+            //Employee[] employees = new Employee[employeeCount];
 
-            employee.Show();
-            Console.ReadLine();
+            //Console.WriteLine("\n\nВведите данные сотрудников ");
+            //for (int i = 0; i < employees.Length; i++)
+            //{
+            //    string str = Console.ReadLine();
+            //}
+            
+            foreach (var item in Enum.GetNames(typeof(Vacancies)))
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
