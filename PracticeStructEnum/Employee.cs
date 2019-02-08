@@ -20,6 +20,17 @@ namespace PracticeStructEnum
             Salary = salary;
             DateOfEngagement = dateOfEngagement;
         }
+        public void Show()
+        {
+            Console.Write($"Name: {Name}" +
+                $"\nVacancy: {Vacancy}" +
+                $"\nSalary: {Salary}" +
+                $"\nDateOfEngagement: ");
+                foreach (var item in DateOfEngagement)
+                {
+                    Console.Write(item + ".");
+                }
+            }
     }
     /*a.	поля name строкового типа;
       b.	поля vacancy типа Vacancies;

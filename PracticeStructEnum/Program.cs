@@ -10,8 +10,11 @@ namespace PracticeStructEnum
     {
         static void Main(string[] args)
         {
-            int[] date = new int[]{ 2018, 01, 15 };
-            Employee employee = new Employee("Bob", Vacancies.Accountant, 15000, date);
+            int[] date = new int[]{ 2018, 10, 15 };
+            Employee employee = new Employee("Bob", Vacancies.Accountant, 250000, date);
+
+            employee.Show();
+            Console.ReadLine();
         }
     }
 }
