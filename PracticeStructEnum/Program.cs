@@ -34,6 +34,7 @@ namespace PracticeStructEnum
             DataEntry(employees, PostAndCount);
             WorkersEngagedAfterBoss(employees, employees[0].DateOfEngagement);
             
+            TopManagers(employees, PostAndCount[(Positions.Clerk).ToString()]);
         }
         public static void DataEntry(Employee[] employees, SortedList<string, int> PostAndCount)
         {
@@ -53,7 +54,7 @@ namespace PracticeStructEnum
                 Console.WriteLine();
             }
         }
-        public static void TopManagers(Employee[] employees)
+        public static void TopManagers(Employee[] employees, int clerksCount)
         {
             int totalClerkSalary = 0;
             for (int i = 0; i < employees.Length; i++)
