@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PracticeStructEnum
 {
-    public enum  Vacancies
+    public enum  Positions
     {
-        Boss, Manager, Accountant, Clerk, Salesman, Driver
+        Boss, Manager, Accountant, Clerk, Salesman
     }
 }

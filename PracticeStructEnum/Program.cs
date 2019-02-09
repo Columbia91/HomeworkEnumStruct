@@ -12,42 +12,56 @@ namespace PracticeStructEnum
         static void Main(string[] args)
         {
             int employeeCount = 0;
-            
-            string[] posts = { "Начальник", "Менеджер", "Бухгалтер", "Клерк", "Торговый агент" };
-            List<int> eachPostCounts = new List<int>(5);
+            SortedList<string, int> PostAndCount = new SortedList<string, int>();
 
             Console.Write("Введите количество сотрудников:\n\n");
-            eachPostCounts.Insert(0,1);
-            employeeCount += eachPostCounts[0];
-            for (int i = 1; i < posts.Length; i++)
+            
+            foreach (var item in Enum.GetNames(typeof(Positions)))
             {
-                Console.Write($"{posts[i]}: ");
-                eachPostCounts.Add(int.Parse(Console.ReadLine()));
-                employeeCount += eachPostCounts[i];
+                Console.Write($"{item}: ");
+                if(item == (Positions.Boss).ToString())
+                {
+                    PostAndCount.Add(item, 1);
+                    Console.WriteLine(PostAndCount[item]);
+                    continue;
+                }
+                PostAndCount.Add(item, int.Parse(Console.ReadLine()));
+                employeeCount += PostAndCount[item];
             }
             
             Employee[] employees = new Employee[employeeCount];
 
-            DataEntry(employees, posts, eachPostCounts);
+            DataEntry(employees, PostAndCount);
             WorkersEngagedAfterBoss(employees, employees[0].DateOfEngagement);
             
         }
-        public static void DataEntry(Employee[] employees, string[] posts, List<int> eachPostCounts)
+        public static void DataEntry(Employee[] employees, SortedList<string, int> PostAndCount)
         {
             int iterator = 0;
-            for (int i = 0; i < posts.Length; i++)
+            foreach (var item in Enum.GetNames(typeof(Positions)))
             {
                 Console.Clear();
                 Console.WriteLine("Введите данные  сотрудника");
-                for (int j = 0; j < eachPostCounts[i]; j++)
+                for (int j = 0; j < PostAndCount[item]; j++)
                 {
-                    Console.Write($"\nДолжность:\t{posts[i]}\n"); employees[iterator].Post = (Positions)iterator;
+                    Console.Write($"\nДолжность:\t{item}\n"); employees[iterator].Post = (Positions)iterator;
                     Console.Write("Полное имя:\t"); employees[iterator].Name = Console.ReadLine();
                     Console.Write("Зарплата:\t"); employees[iterator].Salary = int.Parse(Console.ReadLine());
                     Console.Write("Дата приема:\t"); employees[iterator].DateOfEngagement = DateTime.Parse(Console.ReadLine());
                 }
                 iterator++;
                 Console.WriteLine();
+            }
+        }
+        public static void TopManagers(Employee[] employees)
+        {
+            int totalClerkSalary = 0;
+            for (int i = 0; i < employees.Length; i++)
+            {
+                if (employees[i].Post == Positions.Clerk)
+                {
+                    totalClerkSalary += employees[i].Salary;
+                }
             }
         }
         public static void WorkersEngagedAfterBoss(Employee[] employees, DateTime bossDateOfEngagement)
@@ -63,4 +77,3 @@ namespace PracticeStructEnum
         }
     }
 }
-//foreach (var item in Enum.GetNames(typeof(Positions)))
