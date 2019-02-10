@@ -23,6 +23,7 @@ namespace PracticeStructEnum
                 {
                     PostAndCount.Add(item, 1);
                     Console.WriteLine(PostAndCount[item]);
+                    employeeCount += PostAndCount[item];
                     continue;
                 }
                 PostAndCount.Add(item, int.Parse(Console.ReadLine()));
@@ -30,27 +31,56 @@ namespace PracticeStructEnum
             }
             
             Employee[] employees = new Employee[employeeCount];
-
             DataEntry(employees, PostAndCount);
-            WorkersEngagedAfterBoss(employees, employees[0].DateOfEngagement);
-            
-            TopManagers(employees, PostAndCount[(Positions.Clerk).ToString()]);
+
+            while (true)
+            {
+                Console.Write("Выберите необходимую информацию" +
+                "\n1) Полная информация о сотрудниках" +
+                "\n2) Менеджеры, зарплата которых больше ср. зарплаты клерков" +
+                "\n3) Сотрудники принятые на работу позже босса" +
+                "\n\nВыбор: ");
+                int choice = int.Parse(Console.ReadLine());
+                Console.Clear();
+                switch (choice)
+                {
+                    case 1: // Полная информация о сотрудниках
+                        for (int i = 0; i < employees.Length; i++)
+                        {
+                            employees[i].Show();
+                            Console.WriteLine("\n");
+                        }
+                        break;
+                    case 2: // Менеджеры, зарплата которых больше ср. зарплаты клерков
+                        TopManagers(employees, PostAndCount[(Positions.Clerk).ToString()]);
+                        break;
+                    case 3:  // Сотрудники принятые на работу позже босса
+                        WorkersEngagedAfterBoss(employees, employees[0].DateOfEngagement);
+                        break;
+                    default:
+                        Console.WriteLine("Ошибочный выбор! Введите заново...");
+                        break;
+                }
+                Console.Write("Нажмите Enter чтобы продолжить...");
+                Console.ReadKey();
+                Console.Clear();
+            } 
         }
         public static void DataEntry(Employee[] employees, SortedList<string, int> PostAndCount)
         {
             int iterator = 0;
-            foreach (var item in Enum.GetNames(typeof(Positions)))
+            for (int i = 0; i < PostAndCount.Count; i++)
             {
                 Console.Clear();
                 Console.WriteLine("Введите данные  сотрудника");
-                for (int j = 0; j < PostAndCount[item]; j++)
+                for (int j = 0; j < PostAndCount[((Positions)i).ToString()]; j++)
                 {
-                    Console.Write($"\nДолжность:\t{item}\n"); employees[iterator].Post = (Positions)iterator;
+                    Console.Write($"\nДолжность:\t{(Positions)i}\n"); employees[iterator].Post = (Positions)i;
                     Console.Write("Полное имя:\t"); employees[iterator].Name = Console.ReadLine();
                     Console.Write("Зарплата:\t"); employees[iterator].Salary = int.Parse(Console.ReadLine());
                     Console.Write("Дата приема:\t"); employees[iterator].DateOfEngagement = DateTime.Parse(Console.ReadLine());
+                    iterator++;
                 }
-                iterator++;
                 Console.WriteLine();
             }
         }
@@ -64,10 +94,21 @@ namespace PracticeStructEnum
                     totalClerkSalary += employees[i].Salary;
                 }
             }
+            double averageClerkSalary = totalClerkSalary / clerksCount;
+            
+            Array.Sort(employees, new SortByName());
+            for (int i = 0; i < employees.Length; i++)
+            {
+                if (employees[i].Post == Positions.Manager)
+                    if (employees[i].Salary > averageClerkSalary)
+                    {
+                        employees[i].Show();
+                        Console.WriteLine("\n");
+                    }
+            }
         }
         public static void WorkersEngagedAfterBoss(Employee[] employees, DateTime bossDateOfEngagement)
         {
-            Console.Clear();
             Array.Sort(employees, new SortByName());
             for (int i = 0; i < employees.Length; i++)
             {
