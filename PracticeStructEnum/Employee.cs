@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PracticeStructEnum
+namespace HomeworkStructEnum
 {
     public struct Employee
     {
