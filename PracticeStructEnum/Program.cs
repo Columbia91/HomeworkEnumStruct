@@ -78,7 +78,7 @@ namespace HomeworkStructEnum
                     Console.Write($"\nДолжность:\t{(Positions)i}\n"); employees[iterator].Post = (Positions)i;
                     Console.Write("Полное имя:\t"); employees[iterator].Name = Console.ReadLine();
                     Console.Write("Зарплата:\t"); employees[iterator].Salary = int.Parse(Console.ReadLine());
-                    Console.Write("Дата приема:\t"); employees[iterator].DateOfEngagement = DateTime.Parse(Console.ReadLine());
+                    Console.Write("Дата приема\n(dd.mm.yyyy):\t"); employees[iterator].DateOfEngagement = DateTime.Parse(Console.ReadLine());
                     iterator++;
                 }
                 Console.WriteLine();
